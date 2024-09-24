@@ -67,7 +67,8 @@ int main() {
 
 			if (now_s == root) {
 				now_s->alpha[i]->fail_Node = root;
-                arr.push(now_s->alpha[i]);
+                if (now_s->alpha[i]->fail_Node->can_make)now_s->alpha[i]->can_make = true;
+			    arr.push(now_s->alpha[i]);
 				//root에 온거면 어차피 맞는게 없어서 온거니 can_make관리 ㄴㄴ
 				continue;
 			}
