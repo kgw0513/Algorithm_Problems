@@ -85,7 +85,7 @@ int main() {
 
 		}
 
-		ll s = 0, e = need_water * 2;
+		ll s = 0, e = need_water;
 		ll ans = -1;
 		while (s <= e) {
 			//cout << s << "~" << e << "=>";
