@@ -77,10 +77,6 @@ int main() {
 		string a, b;
 		cin >> a >> b;
 		if (a == b)continue;
-		if (check.find({ a,b }) != check.end())continue;
-		if (check.find({ b,a }) != check.end())continue;
-		check.insert({ a,b });
-		check.insert({ b,a });
 		lines[a].push_back(b);
 		lines[b].push_back(a);
 	}
