@@ -89,17 +89,18 @@ int main() {
 				if (arr[i] != INF && i - e1_up_gap >= 1) {
 					for (int j = i; j + e1_down_gap <= n; j += gap) {
 						ll next_j = j + gap;
-						if (arr[j] + t >= arr[next_j])break;
 						arr[next_j] = min(arr[j] + t, arr[next_j]);
+						break;
 					}
 				}
 				if (brr[i] != INF && i - e1_up_gap >= 1) {
 					for (int j = i; j + e1_down_gap <= n; j += gap) {
 						ll next_j = j + gap;
-						if (brr[j] + t >= brr[next_j])break;
 						brr[next_j] = min(brr[j] + t, brr[next_j]);
+						break;
 					}
 				}
+
 			}
 			for (int i = n; i >= 1; i--) {
 				//위로 올라가는 모습
