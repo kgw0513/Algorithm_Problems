@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 /*
  * class Test{
 	int a=0;
@@ -49,7 +48,6 @@ public class Main {
 		for(int i=0;i<n;i++) {
 			arr[i]=s.nextInt();
 		}
-		Arrays.sort(arr);
 		long sum=0;
 		for(int i=0;i<n;i++) {
 			sum+=arr[i];
