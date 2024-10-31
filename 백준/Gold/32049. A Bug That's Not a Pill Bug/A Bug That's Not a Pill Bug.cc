@@ -87,7 +87,7 @@ ll_ll cal(int n) {
 	ll move_count = 0;
 	while (dist > move_count) {
 		ll_ll new_p = { p.fi + dxdy[arrow].fi,p.se + dxdy[arrow].se };
-		if (new_p.fi > 101 || new_p.se > 100 ||
+		if (new_p.fi > 100 || new_p.se > 100 ||
 			new_p.fi < 0 || new_p.se < 0) {
 			//밖으로 탈출했다는 뜻
 			ll left = dist - move_count;
