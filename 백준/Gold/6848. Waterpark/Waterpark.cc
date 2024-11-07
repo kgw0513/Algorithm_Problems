@@ -68,16 +68,16 @@ int main() {
 	cin.tie(NULL);
 	int n, x, y;
 	cin >> n;
-	ans[n] = 1;
+	ans[1] = 1;
 	while (1) {
 		cin >> x >> y;
 		if (x == 0 && y == 0)break;
-		lines[y].push_back(x);
+		lines[x].push_back(y);
 	}
-	for (int i = n; i >= 2; i--) {
+	for (int i = 1; i < n; i++) {
 		for (int j : lines[i]) {
 			ans[j] += ans[i];
 		}
 	}
-	cout << ans[1];
+	cout << ans[n];
 }
