@@ -60,19 +60,19 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-ull arr[41][211][211];
-bool visit[41][211];
-void dfs(int p, string& w,ll& div) {
-	if (visit[p][div])return;
-	visit[p][div] = true;
+ll arr[51][210];
+bool visit[51];
+void dfs(int p,string &w) {
+	if (visit[p])return;
+	visit[p] = true;
 	string now_s = "";
 	for (int i = p; i < w.size(); i++) {
 		now_s += w[i];
 		if (w.size() != i + 1) {
 			//마지막인 경우 제외
-
+			 
 			//i까지 붙였다 할때 그 다음 독립적으로 생각
-			dfs(i + 1, w, div);
+			dfs(i + 1, w);
 
 			//현재까지 이어붙인 값 숫자로 변환
 			string new_s = now_s;
@@ -80,20 +80,19 @@ void dfs(int p, string& w,ll& div) {
 			ll ten_pow = 1;
 			ll h = 0;
 			for (int pi = 0; pi < new_s.size(); pi++) {
-				h += ((new_s[pi] - '0') * (ten_pow % div)) % div;
-				h %= div;
+				h += ((new_s[pi] - '0') * ten_pow % 210);
 				ten_pow *= 10;
-				ten_pow %= div;
+                ten_pow%=210;
 			}
 
 			//현재까지 이어붙인 뒤 뒤에 -를 붙일때
-			for (int j = 0; j < div; j++) {
-				arr[p][(h - j + div) % div][div] += arr[i + 1][j][div];
+			for (int j = 0; j < 210; j++) {
+				arr[p][(h - j + 210) % 210] += arr[i + 1][j];
 			}
 
 			//현재까지 이어붙인 뒤 뒤에 +를 붙일때
-			for (int j = 0; j < div; j++) {
-				arr[p][(h + j) % div][div] += arr[i + 1][j][div];
+			for (int j = 0; j < 210; j++) {
+				arr[p][(h + j) % 210] += arr[i + 1][j];
 			}
 		}
 		else {
@@ -103,13 +102,11 @@ void dfs(int p, string& w,ll& div) {
 			ll ten_pow = 1;
 			ll h = 0;
 			for (int pi = 0; pi < new_s.size(); pi++) {
-				h += ((new_s[pi] - '0') * (ten_pow % div)) % div;
-				h %= div;
+				h += ((new_s[pi] - '0') * ten_pow % 210);
 				ten_pow *= 10;
-
-				ten_pow %= div;
+                ten_pow%=210;
 			}
-			arr[p][h % div][div]++;
+			arr[p][h%210]++;
 			return;
 		}
 	}
@@ -121,28 +118,25 @@ int main() {
 	cin.tie(NULL);
 	int t;
 	cin >> t;
-	for (int test = 1; test <= t; test++) {
+	for(int test=1;test<=t;test++){
 		string w;
 		cin >> w;
 		for (int i = 0; i < 41; i++) {
-			for (int j = 0; j < 211; j++) {
-				visit[i][j] = false;
-				for (int k = 0; k < 211; k++) {
-					arr[i][j][k] = 0;
-				}
+			visit[i] = false;
+			for (int j = 0; j < 210; j++) {
+				arr[i][j] = 0;
 			}
 		}
 		assert(w.size() <= 40);
-		for (ll div : sosu_div) {
-			ll abs_div = abs(div);
-			dfs(0, w, abs_div);
-		}
+		dfs(0, w);
 
 		ll ans = 0;
 		for (ll div : sosu_div) {
 			ll abs_div = abs(div);
-			if (div > 0)ans += arr[0][0][abs_div];
-			else ans -= arr[0][0][abs_div];
+			for (int i = 0; i < 210; i+=abs_div) {
+				if(div>0)ans += arr[0][i];
+				else ans -= arr[0][i];
+			}
 		}
 		cout << "Case #" << test << ": ";
 		cout << ans << "\n";
