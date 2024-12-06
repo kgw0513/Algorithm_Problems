@@ -116,7 +116,7 @@ int main() {
 	while (arr.size()) {
 		timer++;
 		int size = arr.size();
-		while (arr.size()) {
+		while (size--) {
 			int now_p = arr.front().se;
 			int ancestor = arr.front().fi;
 			arr.pop();
