@@ -60,19 +60,49 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
+vector<string>digit;
+vector<string>bigdata;
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
+	digit.push_back("social");
+	digit.push_back("history");
+	digit.push_back("language");
+	digit.push_back("literacy");
+
+	bigdata.push_back("bigdata");
+	bigdata.push_back("public");
+	bigdata.push_back("society");
+
 	string w;
-	while (cin >> w) {
-		if (w == "social" || w=="history"
-			||w=="language" || w=="literacy") {
+	getline(cin, w);
+	for (int i = 0; i < w.size(); i++) {
+		for (string h : digit) {
+			if (i + h.size() > w.size())continue;
+			bool is_match = true;
+			for (int j = 0; j < h.size(); j++) {
+				if (w[i + j] != h[j]) {
+					is_match = false;
+					break;
+				}
+			}
+			if (!is_match)continue;
 			cout << "digital humanities";
 			return 0;
 		}
-		if (w == "bigdata" || w == "public" || w == "society") {
+		for (string h : bigdata) {
+			if (i + h.size() > w.size())continue;
+			bool is_match = true;
+			for (int j = 0; j < h.size(); j++) {
+				if (w[i + j] != h[j]) {
+					is_match = false;
+					break;
+				}
+			}
+			if (!is_match)continue;
 			cout << "public bigdata";
 			return 0;
 		}
 	}
+	return -1;
 }
