@@ -67,13 +67,14 @@ bool odd_sosu[10000001]= { 0,0,0,0 };
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	for (int i = 2; i <= sqrt(10000000); i++) {
+    int sqrt_h=sqrt(10000000);
+	for (int i = 2; i <= sqrt_h; i++) {
 		if (check[i])continue;
 		for (int j = i * i; j < 10000001; j += i) {
 			check[j] = true;
 		}
 	}
-	for (int i = 2; i <= 10000000; i++) {
+	for (int i = 2; i <= sqrt_h; i++) {
 		if (check[i])continue;
 		sosu.push_back(i);
 	}
