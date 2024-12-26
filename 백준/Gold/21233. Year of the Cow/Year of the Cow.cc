@@ -63,10 +63,10 @@ typedef pair<char, int> char_int;
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	ll n, k, w;
+	int n, k, w;
 	cin >> n >> k;
-	map<ll, ll>arr;
-	priority_queue<ll,vector<ll>, greater<ll>>brr;
+	map<int, int>arr;
+	priority_queue<int,vector<int>, greater<>>brr;
 	arr[0]++;
 	while (n--) {
 		cin >> w;
@@ -76,13 +76,14 @@ int main() {
 	for (auto h : arr) {
 		if (last_num != -1) {
 			brr.push(h.fi - last_num);
+			//cout << h.fi<<"-"<<last_num << "=" << h.fi - last_num << "넣음.\n";
 		}
 		last_num = h.fi;
 	}
 	ll ans = 0;
 	while (brr.size() >= k) {
-		ans += brr.top() * 12ll;
-		brr.pop();
-	}
-	cout << ans + 12ll * brr.size();
+	    ans += brr.top() * 12ll;
+	    brr.pop();
+    }
+    cout << ans + 12ll * brr.size();
 }
