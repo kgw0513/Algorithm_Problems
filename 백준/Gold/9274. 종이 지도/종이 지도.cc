@@ -71,8 +71,8 @@ char world_map[1400][1400];
 intint dxdy[4] = { {-1,0},{1,0},{0,-1},{0,1} };
 
 void set_arr() {
-	for (int i = 1; i < 1400; i++) {
-		for (int j = 1; j < 1400; j++) {
+	for (int i = 150; i < min(ar+250,1400); i++) {
+		for (int j = 150; j < min(ac+250,1400); j++) {
 			arr[i][j] = arr[i - 1][j] + arr[i][j - 1] - arr[i - 1][j - 1];
 			if (150 <= i && i < ar + 150 && 150 <= j && j < ac + 150)arr[i][j] += (world_map[i][j] == 'X' ? 1 : 0);
 		}
@@ -88,11 +88,6 @@ int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	while (cin >> ar >> ac >> tr >> tc) {
-		for (int i = 0; i < 1400; i++) {
-			for (int j = 0; j < 1400; j++) {
-				world_map[i][j] = '.';
-			}
-		}
 
 		first_land = { -1,-1 };
 
