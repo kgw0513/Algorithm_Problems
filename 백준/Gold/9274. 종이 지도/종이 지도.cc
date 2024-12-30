@@ -64,8 +64,7 @@ int arr[1400][1400];
 int ar, ac, tr, tc;
 intint first_land;
 
-int visit[1400][1400];
-int visit_number = 0;
+int check[101][101];
 
 char world_map[1400][1400];
 
@@ -83,32 +82,6 @@ void set_arr() {
 bool find_arr(intint start_p, intint end_p) {
 	//cout << start_p.fi << "," << start_p.se << "~" << end_p.fi << "," << end_p.se << "\n";
 	return (arr[end_p.fi][end_p.se] - arr[end_p.fi][start_p.se - 1] - arr[start_p.fi - 1][end_p.se] + arr[start_p.fi - 1][start_p.se - 1]) > 0;
-}
-
-int count_region(intint start_p) {
-	visit_number++;
-
-	int counting = 1;
-
-	queue<intint>arr;
-	intint now_p = { ((first_land.fi - start_p.fi) / tr) * tr + start_p.fi, ((first_land.se - start_p.se) / tc) * tc + start_p.se };
-	arr.push(now_p);
-	visit[now_p.fi][now_p.se] = visit_number;
-	while (arr.size()) {
-		now_p = arr.front();
-		arr.pop();
-		for (int i = 0; i < 4; i++) {
-			intint new_p = { now_p.fi + tr * dxdy[i].fi,now_p.se + tc * dxdy[i].se };
-			if (visit[new_p.fi][new_p.se] == visit_number)continue;
-			if (find_arr(new_p, { new_p.fi + tr - 1,new_p.se + tc - 1 })) {
-				visit[new_p.fi][new_p.se] = visit_number;
-				arr.push(new_p);
-				counting++;
-			}
-		}
-	}
-
-	return counting;
 }
 
 int main() {
@@ -140,10 +113,17 @@ int main() {
 		set_arr();
 
 		int ans = INF;
+
 		for (int i = 1; i <= tr; i++) {
 			for (int j = 1; j <= tc; j++) {
-				int h = count_region({ i,j });
-				ans = min(ans, h);
+				int sum = 0;
+				for (int x = ((150 - i) / tr) * tr + i; x < ar+150; x+=tr) {
+					for (int y = ((150 - j) / tc) * tc + j; y < ac+150; y+=tc) {
+						if (find_arr({ x,y }, { x + tr - 1,y + tc - 1 }))
+							sum++;
+					}
+				}
+				ans = min(ans, sum);
 			}
 		}
 
