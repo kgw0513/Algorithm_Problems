@@ -60,27 +60,23 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-int arr[1400][1400];
+int arr[1200][1200];
 int ar, ac, tr, tc;
-intint first_land;
 
 int check[101][101];
 
-char world_map[1400][1400];
-
-intint dxdy[4] = { {-1,0},{1,0},{0,-1},{0,1} };
+char world_map[1200][1200];
 
 void set_arr() {
-	for (int i = 150; i < min(ar+250,1400); i++) {
-		for (int j = 150; j < min(ac+250,1400); j++) {
+	for (int i = 100; i < min(ar+200,1200); i++) {
+		for (int j = 100; j < min(ac+200,1200); j++) {
 			arr[i][j] = arr[i - 1][j] + arr[i][j - 1] - arr[i - 1][j - 1];
-			if (150 <= i && i < ar + 150 && 150 <= j && j < ac + 150)arr[i][j] += (world_map[i][j] == 'X' ? 1 : 0);
+			if (100 <= i && i < ar + 100 && 100 <= j && j < ac + 100)arr[i][j] += (world_map[i][j] == 'X' ? 1 : 0);
 		}
 	}
 }
 
 bool find_arr(intint start_p, intint end_p) {
-	//cout << start_p.fi << "," << start_p.se << "~" << end_p.fi << "," << end_p.se << "\n";
 	return (arr[end_p.fi][end_p.se] - arr[end_p.fi][start_p.se - 1] - arr[start_p.fi - 1][end_p.se] + arr[start_p.fi - 1][start_p.se - 1]) > 0;
 }
 
@@ -88,23 +84,11 @@ int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	while (cin >> ar >> ac >> tr >> tc) {
-
-		first_land = { -1,-1 };
-
-		for (int i = 150; i < ar + 150; i++) {
-			for (int j = 150; j < ac + 150; j++) {
+		for (int i = 100; i < ar + 100; i++) {
+			for (int j = 100; j < ac + 100; j++) {
 				cin >> world_map[i][j];
-				if (world_map[i][j] == 'X' && first_land.fi == -1) {
-					first_land = { i,j };
-				}
 			}
 		}
-
-		if (first_land.fi == -1) {
-			cout << "0\n";
-			continue;
-		}
-
 		set_arr();
 
 		int ans = INF;
@@ -112,8 +96,8 @@ int main() {
 		for (int i = 1; i <= tr; i++) {
 			for (int j = 1; j <= tc; j++) {
 				int sum = 0;
-				for (int x = ((150 - i) / tr) * tr + i; x < ar+150; x+=tr) {
-					for (int y = ((150 - j) / tc) * tc + j; y < ac+150; y+=tc) {
+				for (int x = ((100 - i) / tr) * tr + i; x < ar+100; x+=tr) {
+					for (int y = ((100 - j) / tc) * tc + j; y < ac+100; y+=tc) {
 						if (find_arr({ x,y }, { x + tr - 1,y + tc - 1 }))
 							sum++;
 					}
