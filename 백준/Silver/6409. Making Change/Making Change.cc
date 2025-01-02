@@ -76,6 +76,7 @@ void dfs(int p,int now_state,int counting) {
 		ans = min(ans, counting + counter[change_money]);
 		return;
 	}
+    if(now_state<-1000)return;
 	if (inputs[p] > 0) {
 		inputs[p]--;
 		dfs(p, now_state - dist[p], counting + 1);
