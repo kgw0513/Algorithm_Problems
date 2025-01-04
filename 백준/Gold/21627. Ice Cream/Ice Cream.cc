@@ -82,7 +82,7 @@ int main() {
 
 	double ans = 0;
 	double left = 0, right = 1e9, mid;
-	for (int timer = 0; timer < 100; timer++) {
+	for (int timer = 0; timer < 82; timer++) {
 		mid = (left + right) / 2;
 		
 		double h = cal(mid);
