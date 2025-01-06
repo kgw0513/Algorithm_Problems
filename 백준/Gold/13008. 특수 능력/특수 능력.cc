@@ -60,88 +60,68 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-int max_cost[51][51];
-int min_cost[51][51];
-int save_cost[51][51];
-int save_cost2[51][51];
+ll visit[1001][51];
 
+struct cmp {
+	bool operator()(ll_ll2& a, ll_ll2& b) {
+		return a.fi > b.fi;
+	}
+};
+//{현 비용,{현 위치, 특수능력 사용횟수}}
+priority_queue<ll_ll2, vector<ll_ll2>, cmp>arr[1001];
+
+vector<ll_ll>lines[51];
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	for (int i = 0; i < 51; i++)
+	for (int i = 0; i < 1001; i++) {
 		for (int j = 0; j < 51; j++) {
-			min_cost[i][j] = nINF;
-			max_cost[i][j] = -nINF;
+			visit[i][j] = INF;
 		}
-	int n, m, c,from,to,cost;
+	}
+
+	ll n, m, c, from, to, cost;
 	cin >> n >> m >> c;
 	while (m--) {
 		cin >> from >> to >> cost;
-		min_cost[from][to] = min(min_cost[from][to], cost);
-		max_cost[from][to] = max(max_cost[from][to], cost);
+		lines[from].push_back({ to,cost });
 	}
 
-	for (int k = 1; k <= n; k++) {
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= n; j++) {
-				min_cost[i][j] = min(min_cost[i][j], min_cost[i][k] + min_cost[k][j]);
-			}
-		}
-	}
+	visit[0][1] = 0;
+	arr[0].push({ 0,{1,0} });
+	for (int loop = 0; loop <= c; loop++) {
+		while (arr[loop].size()) {
+			ll now_h = arr[loop].top().se.fi;
+			ll now_cost = arr[loop].top().fi;
+			ll now_power = arr[loop].top().se.se;
+			arr[loop].pop();
+			if (visit[now_power][now_h] != now_cost)continue;
+			for (intint h : lines[now_h]) {
+				ll new_h = h.fi;
+				{//능력 안쓸때
+					ll new_cost = now_cost + h.se;
+					ll new_power = now_power;
+					if (visit[new_power][new_h] > new_cost) {
+						visit[new_power][new_h] = new_cost;
+						arr[new_power].push({ new_cost,{new_h,new_power} });
+					}
+				}
 
-	for (int i = 1; i <= n; i++) {
-		for (int j = 1; j <= n; j++) {
-			save_cost[i][j] = min_cost[i][j];
-			//cout << "시작 전 " << i << "->" << j << " : " << save_cost[i][j] << "\n";
-		}
-	}
-
-	save_cost[1][1] = 0;
-	int ans = save_cost[1][n];
-	while (c>0) {
-		c--;
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= n; j++) {
-				save_cost2[i][j] = save_cost[i][j];
-				//cout << "중간 1." << i << "->" << j << " : " << save_cost2[i][j] << "\n";
-			}
-		}
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= n; j++) {
-				for (int k = 1; k <= n; k++) {
-					if (max_cost[k][j] == -nINF)continue;
-					save_cost2[i][j] = min(save_cost2[i][j], save_cost[i][k] - max_cost[k][j]);
-					//cout << i << "-" << j << " 현 기록 : " << save_cost2[i][j] << " vs " << save_cost[i][k] << "-" << max_cost[k][j] << "(" << i << "," << k << "/" << k << "," << j << ")\n";
+				{//능력 쓸때
+					ll new_cost = now_cost - h.se;
+					ll new_power = now_power + 1;
+					if (new_power <= c && visit[new_power][new_h] > new_cost) {
+						visit[new_power][new_h] = new_cost;
+						arr[new_power].push({ new_cost,{new_h,new_power} });
+					}
 				}
 			}
 		}
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= n; j++) {
-				save_cost[i][j] = save_cost2[i][j];
-				//cout << "중간 2." << i << "->" << j << " : " << save_cost[i][j] << "\n";
-			}
-		}
+	}
 
-		ans = min(ans,save_cost[1][n]);
-
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= n; j++) {
-				save_cost2[i][j] = save_cost[i][j];
-			}
-		}
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= n; j++) {
-				for (int k = 1; k <= n; k++) {
-					save_cost2[i][j] = min(save_cost2[i][j], save_cost[i][k] + min_cost[k][j]);
-				}
-			}
-		}
-		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= n; j++) {
-				save_cost[i][j] = save_cost2[i][j];
-			}
-		}
-		ans = min(ans, save_cost[1][n]);
+	ll ans = visit[0][n];
+	for (int i = 1; i <= c; i++) {
+		ans = min(ans, visit[i][n]);
 	}
 	cout << ans;
 }
