@@ -66,11 +66,10 @@ int main() {
 	cin.tie(NULL);
 	int n;
 	cin >> n;
-	vector<int>arr(n);
-	vector<int>brr(n);
+	vector<intint>arr(n);
 	for (int i = 0; i < n; i++) {
-		cin >> arr[i];
-		brr[i] = i;
+		cin >> arr[i].se;
+		arr[i].fi = i;
 	}
 
 	int ans = 0;
@@ -78,12 +77,12 @@ int main() {
 		bool check[101] = {1,};
 		int now_sum = 0;
 		int check_ans = 0;
-		for (int& h : brr) {
-			now_sum+= arr[h];
+		for (intint& h : arr) {
+			now_sum+= h.se;
 			if (now_sum < 50)check[now_sum] = true;
 			else if (check[now_sum - 50])check_ans++;
 		}
 		ans = max(ans, check_ans);
-	} while (next_permutation(brr.begin(), brr.end()));
+	} while (next_permutation(arr.begin(), arr.end()));
 	cout << ans;
 }
