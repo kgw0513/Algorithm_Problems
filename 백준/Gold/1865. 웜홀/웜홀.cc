@@ -52,10 +52,6 @@ bool input(){
 		if(sstart[k]==false)continue;
 		if(usednum[k])continue;
 		int wormhole[501]={};
-		for(int i=1;i<=n;i++){
-			wormhole[i]=INF;
-		}
-		wormhole[k]=0;
 		for(int i=1;i<=n-1;i++){
 			for(int j=0;j<arr.size();j++){
 				s=arr[j]->s;e=arr[j]->e;t=arr[j]->t;
@@ -66,12 +62,22 @@ bool input(){
 		for(int i=0;i<arr.size();i++){
 			s=arr[i]->s;e=arr[i]->e;t=arr[i]->t;
 			if(wormhole[s]==INF)continue;
-			if(wormhole[e]>wormhole[s]+t)return true;
+			if(wormhole[e]>wormhole[s]+t){
+				while(arr.size()){
+					free(arr.back());
+					arr.pop_back();
+				}
+				return true;
+			}
 		}
 		for(int i=1;i<=n;i++){
 			if(wormhole[i]!=INF)usednum[i]=true;
 		}
 	}
+	while(arr.size()){
+					free(arr.back());
+					arr.pop_back();
+				}
 	return false;
 }
 
