@@ -61,7 +61,7 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-bool visit[2][1000001];
+bool visit[1000001][2];
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -83,18 +83,18 @@ int main() {
                 return 0;
             }
 
-            if (a+1<=c && !visit[b][a + 1]) {
-                visit[b][a + 1] = true;
+            if (a+1<=c && !visit[a + 1][b]) {
+                visit[a + 1][b] = true;
                 arr.push({ a + 1,b });
             }
 
-            if (a*2<=c && !visit[b][a*2]) {
-                visit[b][a * 2] = true;
+            if (a*2<=c && !visit[a*2][b]) {
+                visit[a * 2][b] = true;
                 arr.push({ a * 2,b });
             }
 
-            if (b+1<=1 && a*10<=c && !visit[b+1][a*10]) {
-                visit[b + 1][a * 10] = true;
+            if (b+1<=1 && a*10<=c && !visit[a*10][b+1]) {
+                visit[a * 10][b + 1] = true;
                 arr.push({ a * 10,b + 1 });
             }
         }
