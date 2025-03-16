@@ -66,14 +66,9 @@ int main() {
     cin.tie(NULL);
     ll n;
     cin >> n;
-    if (n <= 3) {
+    if (n <= 2) {
         cout << 4;
         return 0;
     }
-    ll ans = lINF;
-    for (ll h = 2; h <= sqrt(n); h++) {
-        ll w = ceil(double(n) / h);
-        ans = min(ans, (w - 1) * 2 + (h - 1) * 2);
-    }
-    cout << ans;
+    cout << ll(ceil(sqrt(n)) - 1) * 2 + ll(ceil(n / ceil(sqrt(n))) - 1) * 2;
 }
