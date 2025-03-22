@@ -66,6 +66,5 @@ int main() {
 	cin.tie(NULL);
 	int n;
 	cin >> n;
-    n--;
-	cout << "UOS"[n % 3];
+	cout << "SUO"[n % 3];
 }
