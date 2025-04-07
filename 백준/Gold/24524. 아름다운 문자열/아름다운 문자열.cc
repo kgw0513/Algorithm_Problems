@@ -61,22 +61,22 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
+int arr[26]={};
+int brr[27] = { INF, };
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	string a, b;
 	cin >> a >> b;
-	unordered_map<char, int>arr;
-	int brr[27] = { INF, };
 	for (int i = 0; i < b.size(); i++) {
-		arr.insert({ b[i],i + 1 });
+		arr[b[i]-'a']=i+1;
 	}
 
 	for (int i = 0; i < a.size(); i++) {
-		if (arr.find(a[i]) == arr.end())
+		if (arr[a[i]-'a']==0)
 			continue;
 
-		int h = arr[a[i]];
+		int h = arr[a[i]-'a'];
 		if (brr[h - 1] <= 0)
 			continue;
 		brr[h]++;
