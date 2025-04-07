@@ -66,7 +66,7 @@ int main() {
 	cin.tie(NULL);
 	string a, b;
 	cin >> a >> b;
-	map<char, int>arr;
+	unordered_map<char, int>arr;
 	int brr[27] = { INF, };
 	for (int i = 0; i < b.size(); i++) {
 		arr.insert({ b[i],i + 1 });
