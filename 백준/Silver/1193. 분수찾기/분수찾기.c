@@ -1,0 +1,32 @@
+int main(n,x,y,del,i){
+	int sum=0;
+	scanf("%d",&n);
+	for(i=1;i<5000;i++){
+		sum+=i;
+		if(n<sum){
+			sum-=i;
+			del=n-sum-1;
+			if(n==sum){
+				if(i%2==0){
+					printf("%d/%d",1,i-1);
+				}
+				else{
+					printf("%d/%d",i-1,1);
+				}
+			}
+			else{
+				if(i%2==0){
+					x=1;
+					y=i;
+					printf("%d/%d",x+del,y-del);
+				}
+				else{
+					x=i;
+					y=1;
+					printf("%d/%d",x-del,y+del);
+				}
+			}
+			break;
+		}
+	}
+}
