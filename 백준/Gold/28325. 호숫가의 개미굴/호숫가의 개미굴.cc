@@ -78,15 +78,18 @@ int main() {
 		arr.pop_front();
 	}
 
+	bool first_meet = true;
 	for (int i = 0; i < n; i++) {
 		w = arr[i];
 		if (w == 0) {
 			not_connect++;
 			continue;
 		}
+		first_meet = false;
 		ans += (not_connect + 1) / 2 + w;
 		not_connect = 0;
 	}
-	ans += (not_connect + 1) / 2;
+	if (first_meet) ans += not_connect / 2;
+	else ans += (not_connect + 1) / 2;
 	cout << ans;
 }
