@@ -61,8 +61,8 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-int ans[300001];
-vector<int>arr;
+ll ans[300001];
+vector<ll>arr;
 
 void dfs(int s, int e) {
 	if (s > e)return;
@@ -84,11 +84,11 @@ void dfs(int s, int e) {
 		ans[i] = max_ans.se;
 	}
 	if (s <= max_ans.fi.fi - 1) {
-		arr[max_ans.fi.fi - 1] += max_ans.se;
+		arr[max_ans.fi.fi - 1] = max(arr[max_ans.fi.fi - 1], arr[max_ans.fi.fi - 1] + max_ans.se);
 		dfs(s, max_ans.fi.fi - 1);
 	}
 	if (max_ans.fi.se + 1 <= e) {
-		arr[max_ans.fi.se + 1] += max_ans.se;
+		arr[max_ans.fi.se + 1] = max(arr[max_ans.fi.se + 1], arr[max_ans.fi.se + 1] + max_ans.se);
 		dfs(max_ans.fi.se + 1, e);
 	}
 }
