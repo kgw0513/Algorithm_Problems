@@ -70,6 +70,7 @@ intint dxdy[4] = { {-1,0},{1,0},{0,-1},{0,1} };
 void setting(int p) {
 	for (int i = 1; i <= n; i++) {
 		for (int j = 1; j <= m; j++) {
+            if(state[i][j]!=find_s[p-1])continue;
 			for (int pos_move = 1; pos_move <= k; pos_move++) {
 				for (int ind = 0; ind < 4; ind++) {
 					intint check_p = { i + dxdy[ind].fi * pos_move,j + dxdy[ind].se * pos_move };
