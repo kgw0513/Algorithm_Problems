@@ -42,7 +42,7 @@ constexpr long long INF = 2147483647;
 constexpr long long lINF = 9000000000000000000;
 constexpr long long nlINF = lINF / 10000;
 constexpr int nINF = 1007483647;
-constexpr unsigned long long MOD1 = 1000000007;
+constexpr long long MOD1 = 1000000007;
 constexpr unsigned long long MOD2 = 1000000009;
 typedef long long ll;
 typedef unsigned long long ull;
@@ -69,8 +69,8 @@ vector<vector<ll>> operator*=(vector<vector<ll>>& a, vector<vector<ll>>& b) {
 		for (int j = 0; j < 2; j++) {
 			for (int k = 0; k < 2; k++) {
 				c[i][j] += a[i][k] * b[k][j];
+				c[i][j] = (c[i][j]+MOD1)%MOD1;
 			}
-			c[i][j] = (c[i][j]+MOD1)%MOD1;
 		}
 	}
 	a = move(c);
