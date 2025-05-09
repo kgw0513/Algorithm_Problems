@@ -63,7 +63,7 @@ typedef pair<char, int> char_int;
 
 ll ans[3];
 vector<pair<char, intint>>inputs;
-set<ll>except_Each[3];
+unordered_set<ll>except_Each[3];
 
 int main() {
 	ios_base::sync_with_stdio(false);
