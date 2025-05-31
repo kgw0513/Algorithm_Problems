@@ -61,8 +61,6 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-int check[1001][1001];
-
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -110,8 +108,7 @@ int main() {
 			else cout << 2;
 		}
 		else if (r == 3) {
-			if (l == 0)cout << 0;
-			else cout << l;
+			cout << l;
 		}
 		else if (r == 4) {
 			if (l == 1 || l == 3)cout << 1;
