@@ -64,7 +64,7 @@ typedef pair<char, int> char_int;
 int x, y, n;
 
 //[x][y]
-bool visit[1005][1005];
+bool visit[1001][1001];
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -73,14 +73,12 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		int a, b;
 		cin >> a >> b;
-		visit[a+2][b+2] = true;
+		visit[a][b] = true;
 	}
-	x += 2;
-	y += 2;
 	
 	double ans = 0;
-	for (int i = 2; i < x; i++) {
-		for (int j = 2; j < y; j++) {
+	for (int i = 0; i < x; i++) {
+		for (int j = 0; j < y; j++) {
 			if (visit[i][j] && visit[i + 1][j + 1]) {
 				//cout << i << "," << j << ".성공1\n";
 				ans++;
