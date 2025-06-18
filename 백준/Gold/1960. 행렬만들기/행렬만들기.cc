@@ -73,7 +73,6 @@ struct cmp {
 
 //{위치,값}
 priority_queue<intint, vector<intint>, cmp>crr;
-
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
