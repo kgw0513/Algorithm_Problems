@@ -1,26 +1,15 @@
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <queue>
-#include <deque>
-#include <stack>
-#include <cmath>
-#include <set>
-#include <map>
 #pragma warning(disable:4996)
-#define INF -1000000000
-
-using namespace std;
-
+#include <stdio.h>
+#include <string.h>
+char w[5];
 int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	int t;
-	string a;
-	cin >> t;
-	while (t--) {
-		cin >> a;
-		cout << a[0] << a[a.size() - 1] << "\n";
+	int n;
+	scanf("%d", &n);
+	while (scanf("%s", w)!=EOF) {
+		printf("%c", w[0]);
+		int i = 0;
+		for (i = 0; w[i] != '\0'; i++) {
+		}
+		printf("%c\n", w[i - 1]);
 	}
 }
