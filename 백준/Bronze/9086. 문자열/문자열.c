@@ -1,7 +1,7 @@
 #pragma warning(disable:4996)
 #include <stdio.h>
 #include <string.h>
-char w[100];
+char w[2];
 int main() {
 	int n;
 	scanf("%d", &n);
