@@ -84,7 +84,7 @@ int main() {
     }
     sort(arr.begin(), arr.end(), cmp);
 
-    for (int h = 1000000; h >= 1; h--) {
+    for (int h = 1000000; h >= 0; h--) {
         if (is_can(arr, h)) {
             cout << h;
             return 0;
