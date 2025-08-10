@@ -78,7 +78,7 @@ int main() {
         }
     }
     ll ans = 0;
-    for (int i = 1; i <= t; i++) {
+    for (int i = 2; i <= t; i++) {
         ans = max(ans, arr[i]);
     }
     cout << ans;
