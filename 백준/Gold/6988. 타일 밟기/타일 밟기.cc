@@ -62,7 +62,7 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-bool visible[3000001];
+bool visible[2000001];
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
