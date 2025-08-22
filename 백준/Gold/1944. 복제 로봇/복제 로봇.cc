@@ -65,8 +65,8 @@ typedef pair<char, int> char_int;
 int n;
 int key_give = 1;
 
-char state[52][52];
-int key_state[52][52];
+char state[50][50];
+int key_state[50][50];
 intint key_pos[253];
 
 struct cmp {
@@ -85,7 +85,7 @@ inline int Find(int n) {
 }
 
 void append_line(int start_key) {
-    bool visit[52][52] = {};
+    bool visit[50][50] = {};
     queue<intint>arr;
     int timer = 1;
     intint start_p = key_pos[start_key];
@@ -101,7 +101,7 @@ void append_line(int start_key) {
                 if (visit[new_p.fi][new_p.se])continue;
                 if (state[new_p.fi][new_p.se] == '1')continue;
                 visit[new_p.fi][new_p.se] = true;
-                if (state[new_p.fi][new_p.se] == 'K' || state[new_p.fi][new_p.se] == 'S') {
+                if (state[new_p.fi][new_p.se] == 'K') {
                     lines.push({ {start_key,key_state[new_p.fi][new_p.se]} ,timer });
                 }
                 arr.push(new_p);
@@ -114,13 +114,8 @@ int main() {
     cin.tie(NULL);
     int w;
     cin >> n >> w;
-    for (int i = 0; i < 52; i++) {
-        for (int j = 0; j < 52; j++) {
-            state[i][j] = '1';
-        }
-    }
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
             cin >> state[i][j];
             if (state[i][j] == 'K') {
                 key_pos[++key_give] = { i,j };
