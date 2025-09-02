@@ -93,7 +93,7 @@ private:
 			for (int b : lines[a]) {
 				if (B[b]!=-1 && dist[B[b]] == INF) {
 					dist[B[b]] = dist[a] + 1;
-					arr.push(b);
+					arr.push(B[b]);
 				}
 			}
 		}
@@ -113,10 +113,10 @@ private:
 public:
 	Hopcroft_Karp(int input_n, int output_n) {
 		n = input_n;
-		A.resize(input_n + 1, -1);
-		B.resize(output_n + 1, -1);
-		dist.resize(input_n + 1, INF);
-		lines.resize(input_n + 1, vector<int>());
+		A.resize(input_n, -1);
+		B.resize(output_n, -1);
+		dist.resize(input_n, INF);
+		lines.resize(input_n, vector<int>());
 	}
 
 	void add_line(int a, int b) {
@@ -150,7 +150,7 @@ public:
 int main() {
 	int n;
 	while (scanf("%d", &n) > 0) {
-		Hopcroft_Karp Karp(n, 10000);
+		Hopcroft_Karp Karp(n, 10001);
 		for (int i = 0; i < n; i++) {
 			int home, t, w;
 			scanf("%d: (%d) ", &home, &t);
