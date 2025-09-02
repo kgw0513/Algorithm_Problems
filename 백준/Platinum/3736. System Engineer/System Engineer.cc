@@ -107,7 +107,6 @@ private:
 				return true;
 			}
 		}
-		dist[a] = INF; //이거 안하면 이미 불가능한걸 알면서도 또 와서 다시 계산하는 시간낭비를 한다.
 		return false;
 	}
 public:
