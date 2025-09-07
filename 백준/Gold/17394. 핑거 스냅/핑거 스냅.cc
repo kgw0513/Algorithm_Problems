@@ -63,10 +63,10 @@ typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
 bool isnt_sosu[100002] = { 1,1,0 };
-int visit[2000002] = {};
+int visit[1000002] = {};
 
 void is_can(queue<int>&arr,int now_p, int visit_time) {
-    if (now_p<=0 || now_p >= 2000001 || visit[now_p] == visit_time)return;
+    if (now_p<=0 || now_p >= 1000001 || visit[now_p] == visit_time)return;
     arr.push(now_p);
     visit[now_p] = visit_time;
 }
