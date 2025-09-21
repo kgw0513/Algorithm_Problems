@@ -62,7 +62,7 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-bool dp[10000002];
+bool dp[200000];
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -72,14 +72,14 @@ int main() {
     while (t--) {
         cin >> a >> b;
         while (a--) {
-            for (int i = 10000000; i >= b; i--) {
+            for (int i = 200000; i >= b; i--) {
                 if (dp[i - b])dp[i] = true;
             }
         }
     }
 
     intint ans = {};
-    for (int i = 0; i <= 10000000; i++) {
+    for (int i = 0; i <= 200000; i++) {
         if (dp[i] && ans.fi < min((i / x)*y, d)) {
             //cout << i << "발견.\n";
             ans = { min((i / x)*y,d) ,i };
