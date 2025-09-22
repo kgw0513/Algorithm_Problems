@@ -62,23 +62,9 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-bool visit[46342] = { 1,1, };
-vector<ll>sosu;
-//2 3 5 7 11
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    for (ll i = 2; i <= 46340; i++) {
-        if (visit[i])continue;
-        for (ll j = i * i; j <= 46340; j += i) {
-            visit[j] = true;
-        }
-    }
-
-    for (ll i = 2; i <= 46340; i++) {
-        if (visit[i])continue;
-        sosu.push_back(i);
-    }
     ll n;
     while (1) {
         cin >> n;
@@ -87,51 +73,23 @@ int main() {
             cout << "No such base\n";
             continue;
         }
-        if (n == 3) {
-            cout << "4\n";
-            continue;
-        }
         n -= 3;
-        map<ll, ll>arr;
-        for (ll& h : sosu) {
-            while (n % h == 0) {
-                arr[h]++;
-                n /= h;
-            }
-        }
-
-        //cout << arr[2] << "개.\n";
-        if (arr[2] >= 2) {
-            cout << "4\n";
-            continue;
-        }
-        if (arr[5] >= 1) {
-            cout << "5\n";
-            continue;
-        }
-        if (arr[2] >= 1 && arr[3]>=1) {
-            cout << "6\n";
-            continue;
-        }
-        if (arr[7] >= 1) {
-            cout << "7\n";
-            continue;
-        }
-        if (arr[3] >= 2) {
-            cout << "9\n";
-            continue;
-        }
         bool bFind = false;
-        for (int i = 4; i < sosu.size(); i++) {
-            if (arr[sosu[i]] >= 1) {
-                cout << sosu[i] << "\n";
+        for (ll i = 4; i <= sqrt((1ll << 31) - 3) + 5; i++) {
+            if (n % i == 0) {
+                cout << i << "\n";
                 bFind = true;
                 break;
             }
         }
+
         if (!bFind) {
-            if (n >= 4)cout << n << "\n";
-            else cout << "No such base\n";
+            if (n <= 3)cout << "No such base\n";
+            else {
+                while (n % 2 == 0)n /= 2;
+                while (n % 3 == 0)n /= 3;
+                cout << n << "\n";
+            }
         }
     }
 }
