@@ -84,12 +84,12 @@ int main() {
         }
 
         if (!bFind) {
-            if (n <= 3)cout << "No such base\n";
-            else {
+            if (n >= 4) {
                 while (n % 2 == 0)n /= 2;
                 while (n % 3 == 0)n /= 3;
                 cout << n << "\n";
             }
+            else cout << "No such base\n";
         }
     }
 }
