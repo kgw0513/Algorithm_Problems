@@ -79,6 +79,7 @@ int main() {
         vector<bitset<460>>state(n + 1);
 
         queue<pair<bitset<460>,int>>brr;
+        set<string>crr;
         while (m--) {
             cin >> a >> b;
             lines[a].push_back(b);
@@ -107,6 +108,8 @@ int main() {
                 bitset<460>new_state = now_state;
                 int new_sum = now_sum + arr[i];
                 new_state[i] = 1;
+                if (crr.find(new_state.to_string()) != crr.end())continue;
+                crr.insert(new_state.to_string());
                 brr.push({ new_state,new_sum });
             }
         }
