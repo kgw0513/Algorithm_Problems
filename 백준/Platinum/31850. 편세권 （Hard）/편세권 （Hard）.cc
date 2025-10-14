@@ -139,7 +139,6 @@ ll Cal(vector<Node>arr,const int n,const int m) {
         }
     }
 
-    delete(rootSeg);
     return ans;
 }
 
