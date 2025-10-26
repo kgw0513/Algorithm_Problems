@@ -79,7 +79,9 @@ int main() {
         }
     }
     ll a, b;
+    ll input_count=0;
     while (cin >> a) {
+        input_count++;
         fill(arr, arr + 432, 0);
         cin >> b;
 
@@ -101,4 +103,5 @@ int main() {
         }
         cout << ans << "\n";
     }
+    assert(input_count<=93900);
 }
