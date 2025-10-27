@@ -64,38 +64,38 @@ typedef pair<char, int> char_int;
 
 char arr[2002][2002];
 int max_j[2002];
-
+int short_j[2002];
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n, m;
+    int h = 0;
     cin >> n >> m;
-
-    int package = 0;
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
             cin >> arr[i][j];
-            if (arr[i][j] == 'C')package++;
+            if (arr[i][j] == 'C') {
+                if (short_j[i] == 0)short_j[i] = j;
+            }
         }
+        if (short_j[i] != 0)h++;
         max_j[i] = m;
     }
 
     int driver = 0;
-    for (; package > 0; driver++) {
+    for (; h>0; driver++) {
         //cout << package << "개.\n";
         int j = 1;
         for (int i = 1; i <= n; i++) {
             int new_j = j;
-            for (int check_j = j+1; check_j <= max_j[i]; check_j++) {
+            for (int check_j = j + 1; check_j <= max_j[i]; check_j++) {
                 if (arr[i][check_j] == 'C')new_j = check_j;
             }
-            for (int check_j = j; check_j <= new_j; check_j++) {
-                if (arr[i][check_j] == 'C') {
-                    package--;
-                    arr[i][check_j] = '-';
-                }
+            max_j[i] = j - 1;
+            if (short_j[i] > max_j[i]) {
+                h--;
+                short_j[i] = -100;
             }
-            max_j[i] = j;
             j = new_j;
         }
 
