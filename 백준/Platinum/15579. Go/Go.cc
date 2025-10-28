@@ -68,18 +68,18 @@ typedef pair<char, int> char_int;
 // 세번째 index : 마지막 이동이 이제 갈 왼쪽 포켓몬 옆인지(0), 이제 갈 오른쪽 포켓몬 옆인지(1)
 // 네번째 index : 걸린시간 (최대 2000시간 쓴다 가정)
 // 저장 값 : 최대가 되는 사탕 갯수
-ll arr[105][105][2][2005];
+int arr[105][105][2][2005];
 bool visit[105][105][2][2005];
 
-ll_ll pokemon[105];
+intint pokemon[105];
 
-ll house2pokemon[1005];
-ll pokemon2house[105];
+int house2pokemon[1005];
+int pokemon2house[105];
 
-ll pokemon2leftpokemon[105]; //현 포켓몬 -> 다음 왼쪽 포켓몬 번호
-ll pokemon2rightpokemon[105]; //현 포켓몬 -> 다음 오른쪽 포켓몬 번호
+int pokemon2leftpokemon[105]; //현 포켓몬 -> 다음 왼쪽 포켓몬 번호
+int pokemon2rightpokemon[105]; //현 포켓몬 -> 다음 오른쪽 포켓몬 번호
 
-ll dfs(ll poke_s, ll poke_e, ll now_p,bool is_left, ll cur_time) {
+int dfs(int poke_s, int poke_e, int now_p,bool is_left,int cur_time) {
     if (cur_time > 2000)return 0;
 
     if (visit[poke_s][poke_e][is_left][cur_time])return arr[poke_s][poke_e][is_left][cur_time];
@@ -88,14 +88,14 @@ ll dfs(ll poke_s, ll poke_e, ll now_p,bool is_left, ll cur_time) {
     if (poke_s == 0 && poke_e == 0)return arr[poke_s][poke_e][is_left][cur_time] = 0;
 
     if (poke_s != 0) {
-        ll next_p = pokemon2house[poke_s];
-        ll next_time = cur_time + abs(now_p - next_p);
+        int next_p = pokemon2house[poke_s];
+        int next_time = cur_time + abs(now_p - next_p);
         arr[poke_s][poke_e][is_left][cur_time] = max(arr[poke_s][poke_e][is_left][cur_time],dfs(pokemon2leftpokemon[poke_s], poke_e, next_p, true, next_time) + (next_time < pokemon[poke_s].se ? pokemon[poke_s].fi : 0));
     }
 
     if (poke_e != 0) {
-        ll next_p = pokemon2house[poke_e];
-        ll next_time = cur_time + abs(next_p - now_p);
+        int next_p = pokemon2house[poke_e];
+        int next_time = cur_time + abs(next_p - now_p);
         arr[poke_s][poke_e][is_left][cur_time] = max(arr[poke_s][poke_e][is_left][cur_time], dfs(poke_s, pokemon2rightpokemon[poke_e], next_p, false, next_time) + (next_time < pokemon[poke_e].se ? pokemon[poke_e].fi : 0));
     }
     
@@ -106,8 +106,8 @@ ll dfs(ll poke_s, ll poke_e, ll now_p,bool is_left, ll cur_time) {
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    ll ans = 0;
-    ll n, k, m, a, b, c;
+    int ans = 0;
+    int n, k, m, a, b, c;
     cin >> n >> k >> m;
     for(int num=1;num<=m;num++){
         cin >> a >> b >> c;
@@ -121,7 +121,7 @@ int main() {
     }
 
     {
-        stack<ll>brr;
+        stack<int>brr;
         for (int i = 1; i <= n; i++) {
             if (house2pokemon[i] == 0)continue;
             if (!brr.empty()) {
@@ -135,7 +135,7 @@ int main() {
         }
     }
 
-    ll_ll start_set = { 0,0 };
+    intint start_set = { 0,0 };
     for (int i = k; i >= 1; i--) {
         if (house2pokemon[i] != 0) {
             start_set.fi = house2pokemon[i];
