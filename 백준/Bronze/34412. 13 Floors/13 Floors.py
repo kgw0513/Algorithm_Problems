@@ -1,3 +1,2 @@
-N = int(input())
-
-print(N if N<13 else N+1)
+N=int(input())
+print(N if N<13else N+1)
