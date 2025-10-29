@@ -68,82 +68,65 @@ vector<vector<char>>arr;
 int brr_n, brr_m;
 vector<vector<char>>brr;
 
-char crr[103][103];
-
 int ans = INF;
-void cal(intint p,int state) {
-    for (int i = 0; i < 103; i++) {
-        for (int j = 0; j < 103; j++) {
-            crr[i][j] = '0';
-        }
-    }
-    for (int i = 0; i < arr_n; i++) {
-        for (int j = 0; j < arr_m; j++) {
-            crr[i][j] = arr[i][j];
-        }
-    }
 
-    if (state == 0) {
-        for (int h_i = 0; h_i < brr_n; h_i++) {
-            int a_i = h_i + p.fi;
-            int b_i = h_i;
-            for (int h_j = 0; h_j < brr_m; h_j++) {
-                int a_j = h_j + p.se;
-                int b_j = h_j;
-                if (brr[b_i][b_j] == '0')continue;
-                if (crr[a_i][a_j] != '1') {
-                    crr[a_i][a_j] = '1';
-                    continue;
-                }
-                return;
+char crr[203][203];
+intint start_p = { 52,52 };
+void fill_crr() {
+    for (int i = 0; i < 203; i++) {
+        for (int j = 0; j < 203; j++) {
+            crr[i][j] = 0;
+        }
+    }
+    for (int a_i = 0; a_i < arr_n; a_i++) {
+        for (int a_j = 0; a_j < arr_m; a_j++) {
+            int i = a_i + start_p.fi;
+            int j = a_j + start_p.se;
+            crr[i][j] = arr[a_i][a_j];
+        }
+    }
+}
+
+void cal(intint p,int rotate) {
+    fill_crr();
+    
+    if (rotate == 0) {
+        for (int b_i = 0; b_i < brr_n; b_i++) {
+            int c_i = p.fi + b_i;
+            for (int b_j = 0; b_j < brr_m; b_j++) {
+                int c_j = p.se + b_j;
+                if (brr[b_i][b_j] == '1' && crr[c_i][c_j] == '1')return;
+                crr[c_i][c_j] = '1';
             }
         }
     }
-    else if (state == 2) {
-        for (int h_i = 0; h_i < brr_n; h_i++) {
-            int a_i = h_i + p.fi;
-            int b_i = brr_n - h_i - 1;
-            for (int h_j = 0; h_j < brr_m; h_j++) {
-                int a_j = h_j + p.se;
-                int b_j = brr_m - h_j - 1;
-                if (brr[b_i][b_j] == '0')continue;
-                if (crr[a_i][a_j] != '1') {
-                    crr[a_i][a_j] = '1';
-                    continue;
-                }
-                return;
+    if (rotate == 2) {
+        for (int b_i = 0; b_i < brr_n; b_i++) {
+            int c_i = p.fi + brr_n - b_i - 1;
+            for (int b_j = 0; b_j < brr_m; b_j++) {
+                int c_j = p.se + (brr_m - b_j - 1);
+                if (brr[b_i][b_j] == '1' && crr[c_i][c_j] == '1')return;
+                crr[c_i][c_j] = '1';
             }
         }
     }
-    else if (state == 1) {
-        for (int h_i = 0; h_i < brr_m; h_i++) {
-            int a_i = h_i + p.fi;
-            int b_j = brr_m - h_i - 1;
-            for (int h_j = 0; h_j < brr_n; h_j++) {
-                int a_j = h_j + p.se;
-                int b_i = h_j;
-                if (brr[b_i][b_j] == '0')continue;
-                if (crr[a_i][a_j] != '1') {
-                    crr[a_i][a_j] = '1';
-                    continue;
-                }
-                return;
+    if (rotate == 1) {
+        for (int b_i = 0; b_i < brr_n; b_i++) {
+            int c_j = p.se + b_i;
+            for (int b_j = 0; b_j < brr_m; b_j++) {
+                int c_i = p.fi + brr_m - 1 - b_j;
+                if (brr[b_i][b_j] == '1' && crr[c_i][c_j] == '1')return;
+                crr[c_i][c_j] = '1';
             }
         }
     }
-    else if (state == 3) {
-        for (int h_i = 0; h_i < brr_m; h_i++) {
-            int a_i = h_i + p.fi;
-            int b_j = h_i;
-            for (int h_j = 0; h_j < brr_n; h_j++) {
-                int a_j = h_j + p.se;
-                int b_i = brr_n - h_j - 1;
-                if (brr[b_i][b_j] == '0')continue;
-                if (crr[a_i][a_j] != '1') {
-                    crr[a_i][a_j] = '1';
-                    continue;
-                }
-                return;
+    if (rotate == 3) {
+        for (int b_i = 0; b_i < brr_n; b_i++) {
+            int c_j = p.se + brr_n - 1 - b_i;
+            for (int b_j = 0; b_j < brr_m; b_j++) {
+                int c_i = p.fi + b_j;
+                if (brr[b_i][b_j] == '1' && crr[c_i][c_j] == '1')return;
+                crr[c_i][c_j] = '1';
             }
         }
     }
@@ -151,21 +134,20 @@ void cal(intint p,int state) {
     intint i_minmax = { INF,-INF };
     intint j_minmax = { INF,-INF };
 
-    for (int i = 0; i < 103; i++) {
-        for (int j = 0; j < 103; j++) {
-            if (crr[i][j] == '1') {
-                i_minmax.fi = min(i_minmax.fi, i);
-                i_minmax.se = max(i_minmax.se, i);
-                j_minmax.fi = min(j_minmax.fi, j);
-                j_minmax.se = max(j_minmax.se, j);
-            }
+    for (int i = 0; i < 203; i++) {
+        for (int j = 0; j < 203; j++) {
+            if (crr[i][j] != '1')continue;
+            i_minmax.fi = min(i_minmax.fi, i);
+            i_minmax.se = max(i_minmax.se, i);
+            j_minmax.fi = min(j_minmax.fi, j);
+            j_minmax.se = max(j_minmax.se, j);
         }
     }
 
-    //cout << p.fi << "," << p.se << "/" << state << "상태 성공. => "<< (i_minmax.se - i_minmax.fi + 1)<<"*"<< (j_minmax.se - j_minmax.fi + 1)<<"\n";
-    //cout << "현 결과 : " << ans << " => ";
+    //cout << i_minmax.fi << "~" << i_minmax.se << " / " << j_minmax.fi << "~" << j_minmax.se << "\n";
+
+    //cout << p.fi << "," << p.se <<"/" <<rotate<< ":" << (i_minmax.se - i_minmax.fi + 1) << "*" << (j_minmax.se - j_minmax.fi + 1) << "!!\n";
     ans = min(ans, (i_minmax.se - i_minmax.fi + 1) * (j_minmax.se - j_minmax.fi + 1));
-    //cout << ans << "\n";
 }
 
 int main() {
@@ -190,26 +172,13 @@ int main() {
         }
     }
 
-    for (int i = 0; i <= arr_n; i++) {
-        for (int j = 0; j <= arr_m; j++) {
+    for (int i = start_p.fi - brr_n; i <= start_p.fi + arr_n + brr_n; i++) {
+        for (int j = start_p.se - brr_m; j <= start_p.se + arr_m + brr_m; j++) {
             for (int k = 0; k < 4; k++) {
-                cal({ i,j }, k);
+                cal({ i,j },k);
             }
         }
     }
 
-    swap(arr_n, brr_n);
-    swap(arr_m, brr_m);
-    swap(arr, brr);
-
-    for (int i = 0; i <= arr_n; i++) {
-        for (int j = 0; j <= arr_m; j++) {
-            for (int k = 0; k < 4; k++) {
-                cal({ i,j }, k);
-            }
-        }
-    }
-
-    assert(ans != INF);
     cout << ans;
 }
