@@ -63,9 +63,9 @@ typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
 int arr_n, arr_m;
-char arr[103][103];
+vector<vector<char>>arr;
 
-int n, m;
+int brr_n, brr_m;
 vector<vector<char>>brr;
 
 char crr[103][103];
@@ -74,19 +74,24 @@ int ans = INF;
 void cal(intint p,int state) {
     for (int i = 0; i < 103; i++) {
         for (int j = 0; j < 103; j++) {
+            crr[i][j] = '0';
+        }
+    }
+    for (int i = 0; i < arr_n; i++) {
+        for (int j = 0; j < arr_m; j++) {
             crr[i][j] = arr[i][j];
         }
     }
 
     if (state == 0) {
-        for (int h_i = 0; h_i < n; h_i++) {
+        for (int h_i = 0; h_i < brr_n; h_i++) {
             int a_i = h_i + p.fi;
             int b_i = h_i;
-            for (int h_j = 0; h_j < m; h_j++) {
+            for (int h_j = 0; h_j < brr_m; h_j++) {
                 int a_j = h_j + p.se;
                 int b_j = h_j;
                 if (brr[b_i][b_j] == '0')continue;
-                if (arr[a_i][a_j] != '1') {
+                if (crr[a_i][a_j] != '1') {
                     crr[a_i][a_j] = '1';
                     continue;
                 }
@@ -95,14 +100,14 @@ void cal(intint p,int state) {
         }
     }
     else if (state == 2) {
-        for (int h_i = 0; h_i < n; h_i++) {
+        for (int h_i = 0; h_i < brr_n; h_i++) {
             int a_i = h_i + p.fi;
-            int b_i = n - h_i - 1;
-            for (int h_j = 0; h_j < m; h_j++) {
+            int b_i = brr_n - h_i - 1;
+            for (int h_j = 0; h_j < brr_m; h_j++) {
                 int a_j = h_j + p.se;
-                int b_j = m - h_j - 1;
+                int b_j = brr_m - h_j - 1;
                 if (brr[b_i][b_j] == '0')continue;
-                if (arr[a_i][a_j] != '1') {
+                if (crr[a_i][a_j] != '1') {
                     crr[a_i][a_j] = '1';
                     continue;
                 }
@@ -111,14 +116,14 @@ void cal(intint p,int state) {
         }
     }
     else if (state == 1) {
-        for (int h_i = 0; h_i < m; h_i++) {
+        for (int h_i = 0; h_i < brr_m; h_i++) {
             int a_i = h_i + p.fi;
-            int b_j = m - h_i - 1;
-            for (int h_j = 0; h_j < n; h_j++) {
+            int b_j = brr_m - h_i - 1;
+            for (int h_j = 0; h_j < brr_n; h_j++) {
                 int a_j = h_j + p.se;
                 int b_i = h_j;
                 if (brr[b_i][b_j] == '0')continue;
-                if (arr[a_i][a_j] != '1') {
+                if (crr[a_i][a_j] != '1') {
                     crr[a_i][a_j] = '1';
                     continue;
                 }
@@ -127,14 +132,14 @@ void cal(intint p,int state) {
         }
     }
     else if (state == 3) {
-        for (int h_i = 0; h_i < m; h_i++) {
+        for (int h_i = 0; h_i < brr_m; h_i++) {
             int a_i = h_i + p.fi;
             int b_j = h_i;
-            for (int h_j = 0; h_j < n; h_j++) {
+            for (int h_j = 0; h_j < brr_n; h_j++) {
                 int a_j = h_j + p.se;
-                int b_i = n - h_j - 1;
+                int b_i = brr_n - h_j - 1;
                 if (brr[b_i][b_j] == '0')continue;
-                if (arr[a_i][a_j] != '1') {
+                if (crr[a_i][a_j] != '1') {
                     crr[a_i][a_j] = '1';
                     continue;
                 }
@@ -166,18 +171,20 @@ void cal(intint p,int state) {
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    char w;
     cin >> arr_n >> arr_m;
     for (int i = 0; i < arr_n; i++) {
+        arr.push_back(vector<char>());
         for (int j = 0; j < arr_m; j++) {
-            cin >> arr[i][j];
+            cin >> w;
+            arr[i].push_back(w);
         }
     }
 
-    char w;
-    cin >> n >> m;
-    for (int i = 0; i < n; i++) {
+    cin >> brr_n >> brr_m;
+    for (int i = 0; i < brr_n; i++) {
         brr.push_back(vector<char>());
-        for (int j = 0; j < m; j++) {
+        for (int j = 0; j < brr_m; j++) {
             cin >> w;
             brr[i].push_back(w);
         }
@@ -190,6 +197,19 @@ int main() {
             }
         }
     }
+
+    swap(arr_n, brr_n);
+    swap(arr_m, brr_m);
+    swap(arr, brr);
+
+    for (int i = 0; i <= arr_n; i++) {
+        for (int j = 0; j <= arr_m; j++) {
+            for (int k = 0; k < 4; k++) {
+                cal({ i,j }, k);
+            }
+        }
+    }
+
     assert(ans != INF);
     cout << ans;
 }
