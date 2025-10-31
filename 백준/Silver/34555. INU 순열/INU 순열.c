@@ -1,1 +1,1 @@
-main(n){int i=1;scanf("%d",&n);for(;i<=n;i++){printf("%d ",(n+1)/2+i/2*(i%2?-1:1));}}
+main(n){scanf("%d",&n);for(int i=1;i<=n;i++){printf("%d ",(n+1)/2+i/2*(i%2?-1:1));}}
