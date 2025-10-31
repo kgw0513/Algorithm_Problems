@@ -63,7 +63,7 @@ typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
 unordered_map<int, int>val2num;
-unordered_map<int, int>num2val;
+int num2val[505];
 
 short dp[505][505][505];
 
@@ -83,7 +83,7 @@ int main() {
     for (int val : sort_set) {
         val2num.insert({ val,++counting });
         //cout << val << "<=>" << counting << "??\n";
-        num2val.insert({ counting,val });
+        num2val[counting]=val;
     }
     for (int& w : arr) {
         //cout << w << "->" << val2num[w] << "\n";
