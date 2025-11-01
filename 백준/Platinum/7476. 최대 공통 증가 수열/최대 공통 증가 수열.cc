@@ -63,7 +63,7 @@ typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
 unordered_map<int, int>val2num;
-int num2val[505];
+unordered_map<int, int>num2val;
 
 short dp[505][505][505];
 
@@ -83,7 +83,7 @@ int main() {
     for (int val : sort_set) {
         val2num.insert({ val,++counting });
         //cout << val << "<=>" << counting << "??\n";
-        num2val[counting]=val;
+        num2val.insert({ counting,val });
     }
     for (int& w : arr) {
         //cout << w << "->" << val2num[w] << "\n";
@@ -111,14 +111,15 @@ int main() {
     //}
     //cout << "\n";
 
-    for (int k = 1; k <= counting; k++) {
+    
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) {
+                for (int k = 1; k <= counting; k++) {
                 if (arr[i] == k && brr[j] == k) {
-                    dp[k][i][j] = dp[k - 1][i - 1][j - 1] + 1;
+                    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1;
                 }
                 else {
-                    dp[k][i][j] = max({ dp[k][i - 1][j], dp[k][i][j - 1],dp[k - 1][i][j] });
+                    dp[i][j][k] = max({ dp[i - 1][j][k], dp[i][j - 1][k],dp[i][j][k - 1] });
                 }
             }
         }
@@ -127,15 +128,15 @@ int main() {
 
     int2_int p = { {n,m},counting };
     while (p.fi.fi > 0 && p.fi.se > 0 && p.se > 0) {
-        if (dp[p.se][p.fi.fi][p.fi.se] == dp[p.se][p.fi.fi - 1][p.fi.se]) {
+        if (dp[p.fi.fi][p.fi.se][p.se] == dp[p.fi.fi - 1][p.fi.se][p.se]) {
             p.fi.fi--;
             continue;
         }
-        if (dp[p.se][p.fi.fi][p.fi.se] == dp[p.se][p.fi.fi][p.fi.se - 1]) {
+        if (dp[p.fi.fi][p.fi.se][p.se] == dp[p.fi.fi][p.fi.se - 1][p.se]) {
             p.fi.se--;
             continue;
         }
-        if (dp[p.se][p.fi.fi][p.fi.se] == dp[p.se - 1][p.fi.fi][p.fi.se]) {
+        if (dp[p.fi.fi][p.fi.se][p.se] == dp[p.fi.fi][p.fi.se][p.se - 1]) {
             p.se--;
             continue;
         }
