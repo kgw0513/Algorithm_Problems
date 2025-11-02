@@ -1,0 +1,45 @@
+# [Gold I] Number Sets (Large) - 12720 
+
+[문제 링크](https://www.acmicpc.net/problem/12720) 
+
+### 성능 요약
+
+메모리: 55588 KB, 시간: 5524 ms
+
+### 분류
+
+수학, 자료 구조, 정수론, 분리 집합, 소수 판정, 에라토스테네스의 체
+
+### 제출 일자
+
+2025년 11월 2일 23:10:23
+
+### 문제 설명
+
+<p>You start with a sequence of consecutive integers. You want to group them into sets.</p>
+
+<p>You are given the interval, and an integer <strong>P</strong>. Initially, each number in the interval is in its own set.</p>
+
+<p>Then you consider each pair of integers in the interval. If the two integers share a prime factor which is at least <strong>P</strong>, then you merge the two sets to which the two integers belong.</p>
+
+<p>How many different sets there will be at the end of this process?</p>
+
+### 입력 
+
+ <p>One line containing an integer <strong>C</strong>, the number of test cases in the input file.</p>
+
+<p>For each test case, there will be one line containing three single-space-separated integers <strong>A</strong>, <strong>B</strong>, and <strong>P</strong>.  <strong>A</strong> and <strong>B</strong> are the first and last integers in the interval, and <strong>P</strong> is the number as described above.</p>
+
+<p>Limits</p>
+
+<ul>
+	<li>1 <= <strong>C</strong> <= 100</li>
+	<li>1 <= <strong>A</strong> <= <strong>B</strong> <= 10<sup>12</sup></li>
+	<li><strong>B</strong> <= <strong>A</strong> + 1000000</li>
+	<li>2 <= <strong>P</strong> <= <strong>B</strong></li>
+</ul>
+
+### 출력 
+
+ <p>For each test case, output one line containing the string "Case #X: Y" where X is the number of the test case, starting from 1, and Y is the number of sets.</p>
+
