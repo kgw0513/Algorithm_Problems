@@ -74,9 +74,7 @@ State dp[32][32][32][32][2];
 char board[32][32];
 
 //가만히 있는것도 포함해야 해서
-//intint dxdy[5] = { {-1,0},{1,0},{0,-1},{0,1},{0,0} };
-
-intint dxdy[5] = { {0,1},{1,0},{0,-1},{-1,0},{0,0} };
+intint dxdy[5] = { {-1,0},{1,0},{0,-1},{0,1},{0,0} };
 
 string print_ans[3];
 
@@ -89,10 +87,8 @@ void cal(const intint queen, const intint army, const bool queen_turn) {
             intint new_queen = { queen.fi + xy.first,queen.se + xy.se };
             if (board[new_queen.fi][new_queen.se] == '#')continue;
             State next_State = dp[new_queen.fi][new_queen.se][army.fi][army.se][!queen_turn];
-            //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "인 여왕이 " << new_queen.fi << "," << new_queen.se << "로 이동 가능 : " << int(next_State) << "\n";
             if (next_State == State::QueenWin) {
                 arr.push({ {queen,army},queen_turn });
-                //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "인 여왕은 항상 이긴다.\n";
                 dp[queen.fi][queen.se][army.fi][army.se][queen_turn] = State::QueenWin; //여왕이 이길 길 찾으면 그냥 바로 반환
                 return;
             }
@@ -101,13 +97,9 @@ void cal(const intint queen, const intint army, const bool queen_turn) {
 
         if (!can_draw) {//여왕이 이길 길은 못찾았고 draw방법도 없을때
             arr.push({ {queen,army},queen_turn });
-            //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "인 여왕은 항상 진다.\n";
             dp[queen.fi][queen.se][army.fi][army.se][queen_turn] = State::ArmyWin;
             return;
         }
-
-
-        //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "여왕 무승부\n";
         return;
     }
 
@@ -117,10 +109,8 @@ void cal(const intint queen, const intint army, const bool queen_turn) {
         intint new_army = { army.fi + xy.first,army.se + xy.se };
         if (board[new_army.fi][new_army.se] == '#')continue;
         State next_State = dp[queen.fi][queen.se][new_army.fi][new_army.se][!queen_turn];
-        //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "인 army가 " << new_army.fi << "," << new_army.se << "로 이동 가능 : " << int(next_State) << "\n";
         if (next_State == State::ArmyWin) {
             arr.push({ {queen,army},queen_turn });
-            //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "인 army는 항상 이긴다.\n";
             dp[queen.fi][queen.se][army.fi][army.se][queen_turn] = State::ArmyWin; //군대가 이기는 길 찾으면 바로 성공
             return;
         }
@@ -129,11 +119,9 @@ void cal(const intint queen, const intint army, const bool queen_turn) {
 
     if (!can_draw) {//군대가 이길 길은 못찾고 현재 draw방법이 없을때
         arr.push({ {queen,army},queen_turn });
-        //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "인 army는 항상 진다.\n";
         dp[queen.fi][queen.se][army.fi][army.se][queen_turn] = State::QueenWin;
         return;
     }
-    //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "army 무승부\n";
 }
 
 void bfs() {
@@ -148,12 +136,8 @@ void bfs() {
                 intint new_queen = { queen.fi + xy.fi,queen.se + xy.se };
                 if (board[new_queen.fi][new_queen.se] == '#')continue;
                 State next_State = dp[new_queen.fi][new_queen.se][army.fi][army.se][!queen_turn];
-                //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "에서 ";
-                //cout << new_queen.fi << "," << new_queen.se << "/" << army.fi << "," << army.se << " 중.1\n";
 
                 if (next_State != State::Draw)continue;
-                //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "에서 ";
-                //cout << new_queen.fi << "," << new_queen.se << "/" << army.fi << "," << army.se << " 탐색 시작.1\n";
 
                 cal(new_queen, army, !queen_turn);
             }
@@ -163,11 +147,9 @@ void bfs() {
                 intint new_army = { army.fi + xy.fi,army.se + xy.se };
                 if (board[new_army.fi][new_army.se] == '#')continue; 
                 State next_State = dp[queen.fi][queen.se][new_army.fi][new_army.se][!queen_turn];
-                //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "에서 ";
-                //cout << queen.fi << "," << queen.se << "/" << new_army.fi << "," << new_army.se << " 중.2\n";
+
                 if (next_State != State::Draw)continue;
-                //cout << queen.fi << "," << queen.se << "/" << army.fi << "," << army.se << "에서 ";
-                //cout << queen.fi << "," << queen.se << "/" << new_army.fi << "," << new_army.se << " 탐색 시작.2\n";
+
                 cal(queen, new_army, !queen_turn);
             }
         }
@@ -228,15 +210,13 @@ int main() {
                 for (int y = 1; y <= m; y++) {
                     if (board[x][y] == '#')continue;
                     if (i == x && j == y) {
-                        //cout << i << "," << j << "/" << x << "," << y << "/" << 0 << "넣음.\n";
                         arr.push({ {{i,j},{x,y}},true });
                         dp[i][j][x][y][1] = State::ArmyWin;
-                        //cout << i << "," << j << "/" << x << "," << y << "/" << 1 << "넣음.\n";
+
                         arr.push({ {{i,j},{x,y}},false });
                         dp[i][j][x][y][0] = State::ArmyWin;
                     }
                     else if (board[i][j] == 'E') {
-                        //cout << i << "," << j << "/" << x << "," << y << "/" << 0 << "넣음.\n";
                         arr.push({ {{i,j},{x,y}},true });
                         dp[i][j][x][y][1] = State::QueenWin;
                     }
