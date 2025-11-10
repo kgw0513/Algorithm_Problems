@@ -63,51 +63,68 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-void back_lines(queue<int>&, const int);
+struct Node {
+    bool is_range=false;
+    int vector_Node_p=-1;
+    int num=-1;
+
+    Node(bool a, int b, int c) {
+        if (a == true) {
+            is_range = a;
+            vector_Node_p = b;
+        }
+        else {
+            num = c;
+        }
+    }
+};
+vector<Node>lines[200002];
 vector<int>inputs;
 
 int s = 0;
-void front_lines(stack<int>&back_state,const int now_lines) {
-    queue<int>arr;
+static int lines_count = 0;
+int cal(const int now_num) {
+    int line_number = ++lines_count;
     for (; s < inputs.size(); s++) {
-        if (inputs[s] != now_lines) {
-            if (inputs[s] < now_lines)break;
-            back_lines(arr, now_lines + 2);
+        if (inputs[s] != now_num) {
+            if (inputs[s] < now_num)break;
+            int h= cal(now_num + 2);
+            lines[line_number].push_back(Node(true, h, -1));
         }
         else {
-            arr.push(s + 1);
+            lines[line_number].push_back(Node(false, -1, s + 1));
         }
     }
-    arr.push(s + 1);
-    stack<int>brr;
-    while (arr.size()) {
-        brr.push(arr.front());
-        arr.pop();
-    }
-    while (brr.size()) {
-        back_state.push(brr.top());
-        brr.pop();
-    }
+    lines[line_number].push_back(Node(false, -1, s + 1));
+
+    return line_number;
 }
 
-void back_lines(queue<int>&front_state, const int now_lines) {
-    stack<int>arr;
-    for (; s < inputs.size(); s++) {
-        if (inputs[s] != now_lines) {
-            if (inputs[s] < now_lines)break;
-            front_lines(arr, now_lines + 2);
-        }
-        else {
-            arr.push(s + 1);
+void print_ans(int now_line,bool is_flip) {
+    //cout << now_line << "중!\n";
+    if (!is_flip) {
+        for (int i = 0; i < lines[now_line].size(); i++) {
+            //cout << now_line << "에서.\n";
+            //cout << lines[now_line][i].is_range << "," << lines[now_line][i].num << "," << lines[now_line][i].vector_Node_p << "??\n";
+            if (lines[now_line][i].is_range == false) {
+                cout << lines[now_line][i].num << " ";
+            }
+            else {
+                print_ans(lines[now_line][i].vector_Node_p, !is_flip);
+            }
         }
     }
-    arr.push(s + 1);
-    while (arr.size()) {
-        front_state.push(arr.top());
-        arr.pop();
+    else {
+        for (int i = lines[now_line].size()-1; i>=0; i--) {
+            if (lines[now_line][i].is_range == false) {
+                cout << lines[now_line][i].num << " ";
+            }
+            else {
+                print_ans(lines[now_line][i].vector_Node_p, !is_flip);
+            }
+        }
     }
 }
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -118,10 +135,5 @@ int main() {
         inputs.push_back(w);
     }
 
-    stack<int>ans;
-    front_lines(ans,1);
-    while (ans.size()) {
-        cout << ans.top()<<" ";
-        ans.pop();
-    }
+    print_ans(cal(1), false);
 }
