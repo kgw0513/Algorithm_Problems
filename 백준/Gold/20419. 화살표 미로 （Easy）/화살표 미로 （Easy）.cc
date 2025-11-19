@@ -126,7 +126,7 @@ int main() {
             }
 
             //오른쪽 회전하기 (0-1 bfs 뒤 넣기)
-            if (right_time + 1 <= k) {
+            if (right_time != k) {
                 intint new_p = now_p;
                 int new_left_turn = left_turn;
                 int new_dxdy_state = (dxdy_state + 1) % 4;
