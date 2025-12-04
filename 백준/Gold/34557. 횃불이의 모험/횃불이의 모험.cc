@@ -62,8 +62,6 @@ typedef pair<intint, intint> int2_int2;
 typedef pair<ll_ll, ll_ll> ll2_ll2;
 typedef pair<char, int> char_int;
 
-char state[102][102];
-
 enum class ButtonEvent {
     Down,
     Stay,
@@ -79,6 +77,7 @@ int char_to_int[26];
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    char state[102][102];
     char_to_int['W' - 'A'] = 0;
     char_to_int['A' - 'A'] = 1;
     char_to_int['S' - 'A'] = 2;
