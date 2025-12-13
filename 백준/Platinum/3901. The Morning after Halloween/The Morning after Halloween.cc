@@ -71,16 +71,11 @@ char state[16][16];
 
 intint dxdy[5] = { {-1,0},{1,0},{0,-1},{0,1},{0,0} };
 
-bool bIsBlock(intint p) {
-    if (state[p.fi][p.se] == '#')return true;
-    return false;
+inline bool bIsBlock(intint p) {
+    return state[p.fi][p.se] == '#';
 }
-bool bIsCross(intint la, intint a, intint lb=intint({-1,-2}), intint b = intint({ -2,-3 }), intint lc = intint({ -3,-4 }), intint c = intint({ -4,-5 })) {
-    if (a == b || b == c || a == c)return true;
-    if (la == b && a == lb)return true;
-    if (la == c && a == lc)return true;
-    if (lb == c && b == lc)return true;
-    return false;
+inline bool bIsCross(intint la, intint a, intint lb=intint({-1,-2}), intint b = intint({ -2,-3 }), intint lc = intint({ -3,-4 }), intint c = intint({ -4,-5 })) {
+    return a == b || b == c || a == c||la == b && a == lb || la == c && a == lc||lb == c && b == lc;
 }
 int main() {
     ios_base::sync_with_stdio(false);
