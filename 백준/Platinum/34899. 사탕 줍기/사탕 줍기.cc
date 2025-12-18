@@ -69,7 +69,7 @@ int dp[202][202];
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n = 200, m = 200, num = 1000;
+    int n = 200, m = 200, num = 70;
     intint p = { 1,1 };
     intint q = { 1,m - 1 };
     dp[1][1] = num;
