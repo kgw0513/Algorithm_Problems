@@ -163,7 +163,7 @@ int main() {
     	save_count++;
     }
     
-    while(save_count>0 && bigger.size() && bigger.front()==0){
+    while(save_count>0 && bigger.front()==0){
     	bigger.pop();
     	save_count--;
     }
