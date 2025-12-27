@@ -145,15 +145,14 @@ int main() {
         }
         cout << dp[state[0]][state[1]][state[2]][state[3]][state[4]][state[5]][state[6]].fi << " ";
 
-        string ans = "";
         while (dp[state[0]][state[1]][state[2]][state[3]][state[4]][state[5]][state[6]].se.fi != '.') {
-            ans += dp[state[0]][state[1]][state[2]][state[3]][state[4]][state[5]][state[6]].se.fi;
+            cout << dp[state[0]][state[1]][state[2]][state[3]][state[4]][state[5]][state[6]].se.fi;
             state = dp[state[0]][state[1]][state[2]][state[3]][state[4]][state[5]][state[6]].se.se;
             //for (int h : dp[state[0]][state[1]][state[2]][state[3]][state[4]][state[5]][state[6]].se.se) {
             //    cout << h << ",";
             //}
             //cout << "로 변경.\n";
         }
-        cout << ans << "\n";
+        cout << "\n";
     }
 }
