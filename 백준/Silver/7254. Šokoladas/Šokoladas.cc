@@ -67,14 +67,14 @@ typedef complex<double> cpx;
 
 int arr[1002][1002];
 
-intint p_i[1002];
-intint p_j[1002];
+intint p_i[1000002];
+intint p_j[1000002];
 
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
-	fill(p_i, p_i + 1002, intint({ nINF,0 }));
-	fill(p_j, p_j + 1002, intint({ nINF,0 }));
+	fill(p_i, p_i + 1000002, intint({ nINF,0 }));
+	fill(p_j, p_j + 1000002, intint({ nINF,0 }));
 	int n, m, g;
 	cin >> n >> m >> g;
 	for (int i = 1; i <= n; i++) {
