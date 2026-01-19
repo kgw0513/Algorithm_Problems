@@ -1,0 +1,169 @@
+#include <coroutine>
+#include <iostream>
+#include <assert.h>
+#include <vector>
+
+class [[nodiscard]] Stack
+{
+    struct Awaitable_Stack;
+
+public:
+    struct promise_type
+    {
+        Stack get_return_object()
+        {
+            return Stack{ std::coroutine_handle<promise_type>::from_promise(*this) };
+        }
+
+        constexpr std::suspend_never initial_suspend() const noexcept
+        {
+            return {};
+        }
+
+        constexpr std::suspend_always final_suspend() const noexcept
+        {
+            return {};
+        }
+
+        template<typename U>
+        std::suspend_always yield_value(U&& value)
+        {
+            Print_ans = std::forward<U>(value);
+            return {};
+        }
+
+        constexpr void return_void() const noexcept {}
+        constexpr void unhandled_exception() noexcept {}
+
+        std::vector<int> Stack_store;
+        int Print_ans;
+    };
+
+    using handle_type = std::coroutine_handle<promise_type>;
+
+    explicit Stack(handle_type h) : _Handle(h) {}
+    Stack() = default;
+
+    ~Stack() {
+        if (_Handle) {
+            _Handle.destroy();
+        }
+    }
+
+    bool Resume() {
+        if (_Handle && !_Handle.done())
+            _Handle.resume();
+
+        return Done();
+    }
+
+    [[nodiscard]]
+    int Result() const {
+        promise_type& promise = _Handle.promise();
+        return promise.Print_ans;
+    }
+
+    bool Done() const {
+        return !_Handle.done();
+    }
+
+public:
+    friend Stack cal(int n);
+
+    handle_type _Handle;
+
+private:
+
+    struct Awaitable_Stack
+    {
+        bool await_ready() const { return false; }
+
+        void await_suspend(handle_type handle) {
+            auto& promise = handle.promise();
+            _Promise = &promise;
+        };
+
+        void await_resume() const noexcept {};
+
+        [[nodiscard]]
+        bool Empty() const {
+            return _Promise->Stack_store.empty();
+        }
+
+        [[nodiscard]]
+        int Top() const
+        {
+            return Empty() ? -1 : _Promise->Stack_store.back();
+        }
+
+        [[nodiscard]]
+        int Pop() const
+        {
+            if (Empty()) {
+                return -1;
+            }
+
+            int num = std::move(_Promise->Stack_store.back());
+            _Promise->Stack_store.pop_back();
+
+            return num;
+        }
+
+        void Insert(int Input) {
+            _Promise->Stack_store.push_back(Input);
+        }
+
+        [[nodiscard]]
+        unsigned int Counting() const {
+            return _Promise->Stack_store.size();
+        }
+
+        promise_type* _Promise = nullptr;
+    };
+};
+
+Stack cal(int n) {
+    Stack::Awaitable_Stack arr;
+
+    co_await arr;
+
+    int a, b;
+    while (n--) {
+        std::cin >> a;
+        switch (a) {
+        case 1:
+            std::cin >> b;
+            arr.Insert(b);
+            break;
+        case 2:
+            co_yield arr.Pop();
+            break;
+        case 3:
+            co_yield arr.Counting();
+            break;
+        case 4:
+            co_yield (arr.Empty() ? 1 : 0);
+            break;
+        case 5:
+            co_yield arr.Top();
+            break;
+        default:
+            throw -1; //에러 표시
+        }
+    }
+    co_return;
+}
+
+int main()
+{
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+
+    int n;
+    std::cin >> n;
+    Stack arr = cal(n);
+
+    while (arr.Resume()) {
+        std::cout << arr.Result() << "\n";
+    }
+}
