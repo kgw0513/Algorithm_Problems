@@ -65,7 +65,7 @@ typedef pair<char, int> char_int;
 typedef pair<int, char> int_char;
 typedef complex<double> cpx;
 
-short dp[102][102];
+char dp[102][102];
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -79,15 +79,15 @@ int main() {
 			}
 		}
 
-		short ans = 0;
+		char ans = 0;
 		for (int len = 2; len <= w.size(); len++) {
 			for (int s = 0; s + len - 1 < w.size(); s++) {
 				int e = s + len - 1;
 				if ((w[s] == '(' && w[e] == ')') || (w[s] == '[' && w[e] == ']')) {
-					dp[s][e] = max(dp[s][e], short(dp[s + 1][e - 1] + 1));
+					dp[s][e] = max(dp[s][e], char(dp[s + 1][e - 1] + 1));
 				}
 				for (int mid = s; mid < e; mid++) {
-					dp[s][e] = max(dp[s][e], short(dp[s][mid] + dp[mid + 1][e]));
+					dp[s][e] = max(dp[s][e], char(dp[s][mid] + dp[mid + 1][e]));
 				}
 
 				ans = max(ans, dp[s][e]);
