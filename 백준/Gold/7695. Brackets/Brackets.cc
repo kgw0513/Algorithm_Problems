@@ -65,7 +65,7 @@ typedef pair<char, int> char_int;
 typedef pair<int, char> int_char;
 typedef complex<double> cpx;
 
-char dp[102][102];
+char dp[100][100];
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -73,8 +73,8 @@ int main() {
 	while (1) {
 		cin >> w;
 		if (w == "end")break;
-		for (int i = 0; i < 102; i++) {
-			for (int j = 0; j < 102; j++) {
+		for (int i = 0; i < 100; i++) {
+			for (int j = 0; j < 100; j++) {
 				dp[i][j] = 0;
 			}
 		}
