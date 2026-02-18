@@ -84,7 +84,7 @@ double dfs(int state, int now_p,const int left_count) {
     bool insert_first = false;
     for (int next_p = 0; next_p < n; next_p++) {
         if ((state & (1 << next_p)) == 0)continue; //이미 쓴 판은 스킵
-        double min_radius_sum = dfs(state - (1 << next_p), next_p,left_count-1) + point_dist(points[now_p], points[next_p])* left_count;
+        double min_radius_sum = dfs(state - (1 << next_p), next_p,left_count+1) + point_dist(points[now_p], points[next_p])* left_count;
         if (!insert_first || dp[now_p][state] > min_radius_sum) {
             insert_first = true;
             dp[now_p][state] = min_radius_sum;
@@ -107,11 +107,11 @@ int main() {
         cin >> w.fi >> w.se;
     }
 
-    double ans = dfs((1 << n) - 1 - (1 << 0), 0, n - 1);
+    double ans = dfs((1 << n) - 1 - (1 << 0), 0, 1);
 
     for (int i = 1; i < n; i++) {
-        if (ans > dfs((1 << n) - 1 - (1 << i), i, n - 1)) {
-            ans = dfs((1 << n) - 1 - (1 << i), i, n - 1);
+        if (ans > dfs((1 << n) - 1 - (1 << i), i, 1)) {
+            ans = dfs((1 << n) - 1 - (1 << i), i, 1);
         }
     }
 
