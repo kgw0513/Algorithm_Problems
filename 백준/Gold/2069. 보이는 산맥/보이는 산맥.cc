@@ -76,13 +76,12 @@ int main() {
         dp[a] = max(dp[a], b);
     }
 
-    ll end_p = 0;
-    ll ans = 0;
+    int end_p = 0;
+    int ans = 0;
     for (int i = 1; i <= 32767; i++) {
         if (end_p >= dp[i])continue;
-        ans += (dp[i] - i) * (dp[i] - i);
-        ll h = max(0ll, (end_p - i));
-        ans -= h * h;
+        int h = max(0, (end_p - i));
+        ans += (dp[i] - i) * (dp[i] - i) -h*h;
         end_p = dp[i];
     }
     cout << ans;
