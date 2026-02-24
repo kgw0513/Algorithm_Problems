@@ -94,13 +94,10 @@ int main() {
         for (vector<int>& team : teams) {
             bool bNotDislike = true;
             for (const int& player : team) {
-                for (const int& hater : lines[player]) {
-                    if (hater == i) {
-                        bNotDislike = false;
-                        break;
-                    }
+                if (lines[player].find(i)!=lines[player].end()) {
+                    bNotDislike = false;
+                    break;
                 }
-                if (!bNotDislike)break;
             }
             if (!bNotDislike)continue;
             bInsert = true;
