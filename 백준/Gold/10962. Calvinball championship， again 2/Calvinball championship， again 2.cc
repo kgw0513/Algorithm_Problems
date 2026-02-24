@@ -75,54 +75,57 @@ namespace std { //unordered_set, unordered_map 전용 (구조체로 쓸 경우 =
     };
 }
 
-unordered_set<int>lines[100002];
-
-priority_queue<intint>arr;
+int n, m;
+int state[100002];
+vector<int>lines[100002];
+set<intint>lines2;
 
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    int n, m, a, b;
+    cin.tie(NULL); 
+    int a, b;
     cin >> n >> m;
     while (m--) {
         cin >> a >> b;
-        lines[a].insert(b);
-        lines[b].insert(a);
+        if (a > b)swap(a, b);
+        lines[a].push_back(b);
+        lines[b].push_back(a);
     }
 
+    vector<intint>arr;
     for (int i = 1; i <= n; i++) {
-        arr.push({ lines[i].size(),i });
+        arr.push_back({ lines[i].size(),i });
     }
 
-    vector<vector<int>>teams;
-    while(!arr.empty()){
-        int i = arr.top().se;
-        arr.pop();
-        bool bInsert = false;
-        for (vector<int>& team : teams) {
-            bool bNotDislike = true;
-            for (const int& player : team) {
-                if (lines[player].find(i) != lines[player].end()) {
-                    bNotDislike = false;
+    sort(arr.begin(), arr.end());
+
+    reverse(arr.begin(), arr.end());
+
+    int give_num = 0;
+    for (intint& a : arr) {
+        if (state[a.se] != 0)continue;
+        state[a.se] = ++give_num;
+
+        for (intint& b : arr) {
+            if (state[b.se] != 0)continue;
+            bool is_can = true;
+            for (int c : lines[b.se]) {
+                if (state[c] == give_num) {
+                    is_can = false;
                     break;
                 }
             }
-            if (!bNotDislike)continue;
-            bInsert = true;
-            team.push_back(i);
-            break;
-        }
-        if (!bInsert) {
-            teams.push_back(vector<int>());
-            teams.back().push_back(i);
+            if (!is_can)continue;
+            state[b.se] = give_num;
         }
     }
 
-    cout << teams.size() << "\n";
-    for (const vector<int>& team : teams) {
-        for (const int& player : team) {
-            cout << player << " ";
+    cout << give_num << "\n";
+    for (int i = 1; i <= give_num; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (state[j] == i)cout << j << " ";
         }
         cout << "\n";
     }
+    
 }
