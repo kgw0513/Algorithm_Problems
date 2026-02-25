@@ -67,7 +67,27 @@ typedef complex<double> cpx;
 int n, m;
 int maps[10][10];
 
-map<string, int>arr[10][10];
+namespace std {
+    struct string_hash {
+        size_t operator()(const string n) const {
+            hash<string> a{}; size_t sa = a(n);
+            return sa;
+        }
+    };
+}
+
+namespace std { //unordered_set, unordered_map 전용 (구조체로 쓸 경우 == operator도 필요)
+    struct pair_hash {
+        template <class T1, class T2>
+        size_t operator()(const pair<T1, T2> n) const {
+            hash<T1> a{}; size_t sa = a(n.fi);
+            hash<T2> b{}; size_t sb = b(n.se);
+            return sa ^ sb;
+        }
+    };
+}
+
+unordered_map<string, int, string_hash>arr[10][10];
 
 void Set_standard(string& state) {
     string h = state;
