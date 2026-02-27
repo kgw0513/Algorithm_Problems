@@ -85,42 +85,27 @@ typedef pair<int, char> int_char;
 typedef complex<double> cpx;
 
 ll n;
-unordered_map<ll_ll, ll, pair_hash>costs;
-vector<ll>lines[300002];
+unordered_map<intint, ll, pair_hash>costs;
+vector<int>lines[300002];
 
 struct Node {
     ll all_in_cost; //간 정점에 들어가는 모든 비용
     ll all_sum; //총 합
-    ll all_count; //총 갯수
+    int all_count; //총 갯수
 };
-//{,{총 합,총 갯수}}
+
 Node dfs(int p, int lp) {
 
-    //갈 수 있는 모든 정점에 대해 방문 먼저
-    //{{u,v},{u->v에 대한 dfs정보}}
-    vector<pair<ll_ll,Node>>arr;
+    vector<pair<int,Node>>arr;
     for (int i = 0; i < lines[p].size(); i++) {
         int np = lines[p][i];
         if (np == lp)continue;
-        arr.push_back({ { p,np }, dfs(np, p) });
+        arr.push_back({ np, dfs(np, p) });
     }
 
     //그동안 갈 수 있던 정점에 들은 정점 갯수 합 (본인꺼 포함)
     ll all_count = 1;
-    for (pair<ll_ll, Node>& h : arr)all_count += h.se.all_count;
-
-
-    /*
-    *   시작 정점(1)일때
-    */
-    //if (lp == -1) {
-
-    //    return {};
-    //}
-
-    /*
-    *   시작 정점(1)이 아닐때
-    */
+    for (pair<int, Node>& h : arr)all_count += h.se.all_count;
 
     ll all_in_costs = 0;
     Node ans;
@@ -128,7 +113,7 @@ Node dfs(int p, int lp) {
     {
         for (int i = 0; i < arr.size(); i++) {
             //들어가는 비용 계산 : 해당 정점안의 들어가는 모든 비용 + 현재 가는 비용*안의 갯수
-            all_in_costs += arr[i].se.all_in_cost + costs[{p, arr[i].fi.se}] * arr[i].se.all_count;
+            all_in_costs += arr[i].se.all_in_cost + costs[{p, arr[i].fi}] * arr[i].se.all_count;
         }
 
         ans.all_count = all_count;
@@ -138,8 +123,8 @@ Node dfs(int p, int lp) {
 
     //내가 간 정점쪽에 우체국이 있다 가정할때
     for (int i = 0; i < arr.size(); i++) {
-        ll mail_start_cost = costs[{arr[i].fi.se,p}] * (n - arr[i].se.all_count);
-        ll now_sum = arr[i].se.all_sum + (all_in_costs - (arr[i].se.all_in_cost + costs[{p, arr[i].fi.se}] * arr[i].se.all_count));
+        ll mail_start_cost = costs[{arr[i].fi,p}] * (n - arr[i].se.all_count);
+        ll now_sum = arr[i].se.all_sum + (all_in_costs - (arr[i].se.all_in_cost + costs[{p, arr[i].fi}] * arr[i].se.all_count));
         now_sum += mail_start_cost;
 
         if (ans.all_sum > now_sum) {
