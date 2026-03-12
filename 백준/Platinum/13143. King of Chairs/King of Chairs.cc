@@ -94,8 +94,7 @@ int main() {
     	cin>>w.se>>w.fi;
     }
     
-    sort(arr.begin(),arr.end());
-    reverse(arr.begin(),arr.end());
+    sort(arr.begin(),arr.end(),greater<intint>());
     
     int c=0;
     for(int i=0;i<n;i++){
