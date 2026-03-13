@@ -84,11 +84,11 @@ typedef pair<char, int> char_int;
 typedef pair<int, char> int_char;
 typedef complex<double> cpx;
 
-ll n;
-ll2_ll2 inputs[2002];
+int n;
+int2_int2 inputs[2002];
 
 //[0:실패,1:성공][위치][성공 갯수] = 사용할 수 있는 최대 시간
-ll dp[2002][2][2002];
+int dp[2002][2][2002];
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -96,7 +96,7 @@ int main() {
     for (int i = 0; i < 2002; i++) {
         for (int j = 0; j < 2; j++) {
             for (int k = 0; k < 2002; k++) {
-                dp[i][j][k] = -nlINF;
+                dp[i][j][k] = -nINF;
             }
         }
     }
