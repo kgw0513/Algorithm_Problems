@@ -103,15 +103,18 @@ string test() {
     string w;
     cin >> n;
     vector<string>inputs;
+    bool now_can = true;
     for (int i = 0; i < n; i++) {
         cin >> w;
         if (i < 10) {
             inputs.push_back(w);
         }
         else {
-            if (inputs[i % 10] != w)return "ERROR!";
+            if (inputs[i % 10] != w)now_can = false;
         }
     }
+
+    if (!now_can)return "ERROR!";
 
     if (n >= 10) {
         return inputs[n % 10];
