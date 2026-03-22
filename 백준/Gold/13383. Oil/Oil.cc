@@ -107,6 +107,7 @@ int main() {
 
         while (m-- > 0) {
             cin >> a >> b >> c;
+            c=(c%2==0?2:1);
             arr[a] += c;
             arr[b] += c;
 
