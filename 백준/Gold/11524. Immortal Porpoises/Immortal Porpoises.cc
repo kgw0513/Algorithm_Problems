@@ -14,6 +14,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <complex>
+
 #pragma warning(disable:4996)
 #define fi first
 #define se second
@@ -86,13 +87,20 @@ typedef complex<double> cpx;
 
 constexpr ll MOD = 1000000000;
 
-vector<vector<ll>>& operator*=(vector<vector<ll>>& a,const vector<vector<ll>>& b) {
-    vector<vector<ll>> c(2, vector<ll>(2, 0));
-    assert(a.size() == 2 && a[0].size() == 2 && a[1].size() == 2);
-    assert(b.size() == 2 && b[0].size() == 2 && b[1].size() == 2);
+template<class T>
+concept arraymul = requires(T a) {
+    a[0][0];
+    a[0][1];
+    a[1][0];
+    a[1][1];
+};
 
+template<arraymul T>
+T& operator *=(T& a, const T& b) {
+    T c = a;
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
+            c[i][j] = 0;
             for (int k = 0; k < 2; k++) {
                 c[i][j] += a[i][k] * b[k][j];
                 c[i][j] %= MOD;
