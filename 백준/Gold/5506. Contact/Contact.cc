@@ -93,7 +93,7 @@ int main() {
     cin >> a >> b >> n >> w;
     w.pop_back();
 
-    map<intint, int>arr;
+    unordered_map<intint, int,pair_hash>arr;
     for (int i = a; i <= min(b,int(w.size())+1); i++) {
         int state = 0;
         for (int j = 0; j < i; j++) {
