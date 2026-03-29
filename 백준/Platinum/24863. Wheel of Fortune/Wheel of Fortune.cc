@@ -86,7 +86,7 @@ typedef complex<double> cpx;
 
 void dfs(const vector<string>& arr){
 	if(arr.size()<=1)return;
-	unordered_map<string,vector<string>>brr;
+	map<string,vector<string>>brr;
 	int dp[26]={};
 	for(const string& h:arr){
 		int dp2[26]={};
