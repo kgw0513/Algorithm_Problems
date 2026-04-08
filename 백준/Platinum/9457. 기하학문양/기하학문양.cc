@@ -116,7 +116,7 @@ typedef pair<int, char> int_char;
 typedef complex<double> cpx;
 
 //[0: 서로 모름 / 1: 서로 알음]
-int arr[2][50002];
+int arr[50002];
 int dp[50002];
 int brr[50002];
 
@@ -126,41 +126,13 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 #pragma region 직사각형 그리드
-    arr[0][1] = 1;
-    arr[1][1] = 1;
-    for (int i = 2; i <= 50000; i++) {
-        {//이미 서로 모를때
-            {// ]모양으로 연결할때
-                arr[1][i] += arr[0][i - 1];
-                arr[1][i] %= MOD;
-            }
-            {//=모양으로 연결할때
-                arr[0][i] += arr[0][i - 1];
-                arr[0][i] %= MOD;
-            }
-        }
-        {//이미 서로 알고 있을때
-            {// ㄱ모양으로 연결할때
-                arr[1][i] += arr[1][i - 1];
-                arr[1][i] %= MOD;
-            }
-            {//J모양으로 연결할때
-                arr[1][i] += arr[1][i - 1];
-                arr[1][i] %= MOD;
-            }
-            {//=모양으로 연결할때
-                arr[1][i] += arr[1][i - 1];
-                arr[1][i] %= MOD;
-            }
-            {//위 ㅡ만 연결할때
-                arr[0][i] += arr[1][i - 1];
-                arr[0][i] %= MOD;
-            }
-            {//아래 _만 연결할때
-                arr[0][i] += arr[1][i - 1];
-                arr[0][i] %= MOD;
-            }
-        }
+    arr[1] = 1;
+    arr[2] = 4;
+    for (int i = 3; i <= 50000; i++) {
+        arr[i] = arr[i-1] *4 - arr[i-2];
+        arr[i] %= MOD;
+        arr[i] += MOD;
+        arr[i] %= MOD;
     }
 #pragma endregion
 #pragma region 원형 그리드
@@ -184,6 +156,6 @@ int main() {
     cin >> t;
     while (t--) {
         cin >> w;
-        cout << arr[1][w] << " " << brr[w] << "\n";
+        cout << arr[w] << " " << brr[w] << "\n";
     }
 }
